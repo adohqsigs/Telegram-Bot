@@ -63,6 +63,5 @@ bot.command('restart', (ctx) => {
 //     }
 //   }
 // });
-// https://morning-scrubland-32486.herokuapp.com/
-// morning-scrubland-32486
+
 module.exports = bot;
