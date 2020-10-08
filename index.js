@@ -10,10 +10,10 @@ var started = false;
 var fromChatId = '';
 var chatId = '';
 
-async function getChatName(id) {
-  const chat = await telegram.getChat(id);
-  return (chat.title)
-};
+// async function getChatName(id) {
+//   const chat = await telegram.getChat(id);
+//   return (chat.title)
+// };
 
 
 bot.command('sourcechat', async (ctx) => {
