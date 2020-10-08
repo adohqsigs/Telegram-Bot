@@ -1,7 +1,7 @@
 // const { Telegraf } = require('telegraf');
 const { Composer } = require('micro-bot');
 const bot = new Composer;
-const Telegram = require('telegraf/telegram')
+// const Telegram = require('telegraf/telegram')
 
 // const BOT_TOKEN = process.env.BOT_TOKEN;
 // const bot = new Telegraf(BOT_TOKEN);
@@ -51,18 +51,18 @@ bot.command('restart', (ctx) => {
   ctx.reply('sourcechat and targetchat have been reset')
 });
 
-bot.on('message', (ctx) => {
-  if (ctx.message.chat.id === fromChatId && chatId) {
-    if (started) {
-      var message = ctx.message.text;
-      var messageId = ctx.message.message_id;
-      telegram.forwardMessage(chatId, fromChatId, messageId)
-    }
-    else {
-      ctx.reply('This message was not forwarded. /startforwarding to start forwarding')
-    }
-  }
-});
+// bot.on('message', (ctx) => {
+//   if (ctx.message.chat.id === fromChatId && chatId) {
+//     if (started) {
+//       var message = ctx.message.text;
+//       var messageId = ctx.message.message_id;
+//       telegram.forwardMessage(chatId, fromChatId, messageId)
+//     }
+//     else {
+//       ctx.reply('This message was not forwarded. /startforwarding to start forwarding')
+//     }
+//   }
+// });
 // https://morning-scrubland-32486.herokuapp.com/
 // morning-scrubland-32486
 module.exports = bot;
