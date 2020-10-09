@@ -3,7 +3,7 @@ const { Composer } = require('micro-bot');
 const bot = new Composer;
 const Telegram = require('telegraf/telegram')
 
-// const telegram = new Telegram('1364016845:AAEIYZHp7SD8A2BvDHl5m3r8G-I_QPqtBDA');
+const telegram = new Telegram(process.env.BOT_TOKEN);
 // const bot = new Telegraf('1364016845:AAEIYZHp7SD8A2BvDHl5m3r8G-I_QPqtBDA');
 
 var started = false;
