@@ -16,6 +16,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/sms', (req, res) => {
+  console.log('sms received')
   const twiml = new MessagingResponse();
 
   telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body)
