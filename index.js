@@ -2,39 +2,34 @@
 const { Composer } = require('micro-bot');
 const bot = new Composer;
 const Telegram = require('telegraf/telegram')
+const http = require('http');
+const express = require('express');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const bodyParser = require('body-parser');
 
 const telegram = new Telegram(process.env.BOT_TOKEN);
 // const bot = new Telegraf('1364016845:AAEIYZHp7SD8A2BvDHl5m3r8G-I_QPqtBDA');
 
-var started = false;
-var chatId = '';
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post('/sms', (req, res) => {
+  const twiml = new MessagingResponse();
+
+  telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body)
 
 
-
-bot.start((ctx) => {
-  chatId = ctx.channelPost.chat.id;
-  console.log(chatId);
-  telegram.sendMessage(chatId, `/startforwarding to begin forwarding messages from sms source\n/stop to stop forwarding sms messages\n*Make sure bot is added to chat or channel for this to work`);
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
 });
 
-bot.command('startforwarding', (ctx) => {
-  chatId = ctx.channelPost.chat.id;
-  console.log(chatId);
-  started = true;
-  ctx.reply(chatId, 'bot will now forward sms messages')
+http.createServer(app).listen(3000, () => {
+  console.log('Express server listening on port 3000');
 });
 
 
-bot.command('stop', (ctx) => {
-  chatId = ctx.channelPost.chat.id;
-  console.log(chatId);
-  started = false;
-  ctx.reply(chatId, 'bot has stop forwarding sms messages')
-});
 
-bot.command('send', (ctx) => {
-  telegram.sendMessage(process.env.CHANNEL_ID, 'message')
-});
 
 module.exports = bot;
 // bot.launch();
