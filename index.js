@@ -15,7 +15,7 @@ const telegram = new Telegram(process.env.BOT_TOKEN);
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/sms', (req, res) => {
   console.log('sms received')
@@ -31,7 +31,7 @@ app.post('/sms', (req, res) => {
 
 });
 
-const port = 3000
+const port = 1337
 http.createServer(app).listen(port, () => {
   console.log(`Express server listening on port ${port}`);
 });
