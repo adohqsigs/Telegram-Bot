@@ -26,8 +26,8 @@ app.post('/sms', (req, res) => {
   res.end(twiml.toString());
 });
 
-const port = process.env.PORT || 3000
-http.createServer(app).listen(port, () => {
+const port = 80
+http.createServer(app).listen(80, () => {
   console.log(`Express server listening on port ${port}`);
 });
 
