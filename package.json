@@ -6,6 +6,9 @@
   "scripts": {
     "start": "micro-bot"
   },
+  "engines": {
+    "node": "12.18.2"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -26,9 +26,6 @@ app.post('/sms', (req, res) => {
   res.end(twiml.toString());
 });
 
-http.createServer(app).listen(3000, () => {
-  console.log(`Express server listening on port 3000`);
-});
 
 
 
