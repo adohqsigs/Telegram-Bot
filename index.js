@@ -4,6 +4,8 @@ const bot = new Composer;
 const Telegram = require('telegraf/telegram')
 const http = require('http');
 const express = require('express');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
+
 
 const bodyParser = require('body-parser');
 
@@ -13,10 +15,12 @@ const telegram = new Telegram(process.env.BOT_TOKEN);
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/sms', (req, res) => {
   console.log('sms received')
+  const twiml = new MessagingResponse();
+
 
   telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body)
 
