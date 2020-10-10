@@ -15,6 +15,10 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+  res.send('hello');
+})
+
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
 
