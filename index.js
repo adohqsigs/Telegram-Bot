@@ -1,6 +1,6 @@
-const { Telegraf } = require('telegraf');
-// const { Composer } = require('micro-bot');
-// const bot = new Composer;
+// const { Telegraf } = require('telegraf');
+const { Composer } = require('micro-bot');
+const bot = new Composer;
 const Telegram = require('telegraf/telegram');
 const http = require('http');
 const express = require('express');
@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 
 
 const telegram = new Telegram(process.env.BOT_TOKEN);
-const bot = new Telegraf(process.env.BOT_TOKEN);
+// const bot = new Telegraf(process.env.BOT_TOKEN);
 
 const app = express();
 
@@ -38,5 +38,5 @@ http.createServer(app).listen(port, () => {
 
 
 
-// module.exports = bot;
-bot.launch();
+module.exports = bot;
+// bot.launch();

@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "micro-bot"
-  },
-  "engines": {
-    "node": "12.18.2"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
