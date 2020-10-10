@@ -20,12 +20,12 @@ app.post('/sms', (req, res) => {
 
   telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body)
 
-
+  res.send('message received')
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 });
 
-http.createServer(app).listen(port, () => {
+http.createServer(app).listen(3000, () => {
   console.log('Express server listening on port 3000');
 });
 
