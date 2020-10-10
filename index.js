@@ -7,7 +7,7 @@ const express = require('express');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 3000
 const telegram = new Telegram(process.env.BOT_TOKEN);
 // const bot = new Telegraf('1364016845:AAEIYZHp7SD8A2BvDHl5m3r8G-I_QPqtBDA');
 
@@ -29,7 +29,9 @@ app.post('/sms', (req, res) => {
 //   console.log('Express server listening on port 3000');
 // });
 
-app.listen(port, console.log(`listening on port ${port}`));
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
 
 
 
