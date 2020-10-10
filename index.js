@@ -21,7 +21,9 @@ app.post('/sms', (req, res) => {
   telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body)
 
 
-  res.status(200).send(req.body.Body);
+
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
 
 });
 
