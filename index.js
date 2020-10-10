@@ -4,7 +4,7 @@ const bot = new Composer;
 const Telegram = require('telegraf/telegram')
 const http = require('http');
 const express = require('express');
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
+
 const bodyParser = require('body-parser');
 
 
@@ -17,18 +17,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/sms', (req, res) => {
   console.log('sms received')
-  const twiml = new MessagingResponse();
 
   telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body)
 
 
   res.send(req.body.Body);
-  res.end(twiml.toString());
+
 });
 
-const port = 80
-http.createServer(app).listen(80, () => {
-  console.log(`Express server listening on port ${port}`);
+const port = process.env.PORT || 3000
+http.createServer(app).listen(port, () => {
+  console.log(`Express server listening on port ${post}`);
 });
 
 
