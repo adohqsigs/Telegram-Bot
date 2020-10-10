@@ -17,7 +17,6 @@
     "express": "^4.17.1",
     "http": "0.0.1-security",
     "micro-bot": "^2.5.3",
-    "telegraf": "^3.38.0",
-    "twilio": "^3.49.4"
+    "telegraf": "^3.38.0"
   }
 }
