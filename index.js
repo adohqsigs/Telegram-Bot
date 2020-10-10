@@ -14,7 +14,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/sms', (req, res) => {
+app.post('morning-scrubland-32486.herokuapp.com/sms', (req, res) => {
   const twiml = new MessagingResponse();
 
   telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body)
