@@ -30,10 +30,10 @@ app.post('/sms', (req, res) => {
 
 });
 
-// const port = process.env.PORT || 3000
-// http.createServer(app).listen(port, () => {
-//   console.log(`Express server listening on port ${port}`);
-// });
+const port = process.env.PORT || 3000
+http.createServer(app).listen(port, () => {
+  console.log(`Express server listening on port ${port}`);
+});
 
 
 
