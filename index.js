@@ -20,12 +20,11 @@ app.post('/sms', (req, res) => {
   console.log(`${req.body.From} sent an sms to the bot`);
   const twiml = new MessagingResponse();
 
-  try {
-    telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body);
-  }
-  catch (ex) {
-    console.log(ex.message);
-  }
+
+  telegram
+    .sendMessage(process.env.CHANNEL_ID, req.body.Body)
+    .catch((err) => console.log(err));
+
 
 
 
