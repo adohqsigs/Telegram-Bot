@@ -35,7 +35,6 @@ app.post('/sms', (req, res) => {
 //   console.log(`Express server listening on port ${port}`);
 // });
 
-app.listen(process.env.PORT, '::');
 
 
 module.exports = bot;
