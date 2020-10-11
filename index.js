@@ -6,7 +6,6 @@ const http = require('http');
 const express = require('express');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
-
 const bodyParser = require('body-parser');
 
 
@@ -18,7 +17,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/sms', (req, res) => {
-  console.log('sms received')
+  console.log('sms forwarded')
   const twiml = new MessagingResponse();
 
 
@@ -31,7 +30,7 @@ app.post('/sms', (req, res) => {
 
 });
 
-const port = 3000
+const port = process.env.PORT || 3000
 http.createServer(app).listen(port, () => {
   console.log(`Express server listening on port ${port}`);
 });
