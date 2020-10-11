@@ -26,14 +26,15 @@ app.post('/sms', (req, res) => {
     .then(() => twiml.message('sms has been forwarded'))
     .catch((err) => {
         console.log(err);
-        twiml.message(err.description);
+        twiml.message(err.message);
     });
 
 
 
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
+  res.send(twiml.toString());
+  res.end();
 
 });
 
