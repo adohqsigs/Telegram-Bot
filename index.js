@@ -17,7 +17,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/sms', (req, res) => {
-  console.log('sms forwarded')
+  console.log(`${req.body.From} sent an sms to the bot`);
   const twiml = new MessagingResponse();
 
   try {
