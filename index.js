@@ -23,7 +23,11 @@ app.post('/sms', (req, res) => {
 
   telegram
     .sendMessage(process.env.CHANNEL_ID, req.body.Body)
-    .catch((err) => console.log(err));
+    .then(() => twiml.message('sms has been forwarded'))
+    .catch((err) => {
+        console.log(err);
+        twiml.message(err.message);
+    });
 
 
 
