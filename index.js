@@ -26,7 +26,7 @@ app.post('/sms', (req, res) => {
     .then(() => twiml.message('sms has been forwarded'))
     .catch((err) => {
         console.log(err);
-        twiml.message(err.message);
+        twiml.message(err.description);
     });
 
 
