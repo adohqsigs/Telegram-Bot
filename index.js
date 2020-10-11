@@ -23,14 +23,9 @@ app.post('/sms', (req, res) => {
 
   telegram
     .sendMessage(process.env.CHANNEL_ID, req.body.Body)
-    .then(() => twiml.message('sms has been forwarded'))
-    .catch((err) => {
-        console.log(err);
-        twiml.message(err.message);
-    });
+    .catch((err) => console.log(err));
 
 
-  console.log(twiml.toString());
   res.writeHead(200, {'Content-Type': 'text/xml', });
   res.end(twiml.toString());
 
