@@ -20,8 +20,12 @@ app.post('/sms', (req, res) => {
   console.log('sms forwarded')
   const twiml = new MessagingResponse();
 
-
-  telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body)
+  try {
+    telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body);
+  }
+  catch (ex) {
+    console.log(ex);
+  }
 
 
 
