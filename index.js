@@ -24,7 +24,7 @@ app.post('/sms', (req, res) => {
     telegram.sendMessage(process.env.CHANNEL_ID, req.body.Body);
   }
   catch (ex) {
-    console.log(ex);
+    console.log(ex.message);
   }
 
 
