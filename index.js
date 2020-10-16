@@ -9,7 +9,7 @@ const app = express();
 
 const telegram = new Telegram(process.env.BOT_TOKEN);
 const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.telegram.setWebhook(`${process.env.BOT_DOMAIN}/bot${process.env.BOT_TOKEN}`)
+bot.telegram.setWebhook(`${process.env.BOT_DOMAIN}/bot${process.env.BOT_TOKEN}`) // comment this out when hosting on local machine
 app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -24,7 +24,8 @@ app.post('/sms', (req, res) => {
     .catch((err) => console.log(err));
 
 
-  res.send('received');
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
 
 });
 
