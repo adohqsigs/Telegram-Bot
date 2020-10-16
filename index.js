@@ -14,7 +14,7 @@ app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/sms', (req, res) => {
-  if (req.body.From !== process.env.SOURCE_NO) return res.status(401).send(`User ${req.body.From} not authorised to send messages`);
+  // if (req.body.From !== process.env.SOURCE_NO) return res.status(401).send(`User ${req.body.From} not authorised to send messages`);
   console.log(`${req.body.From} sent an sms to the bot`);
   const twiml = new MessagingResponse();
 
