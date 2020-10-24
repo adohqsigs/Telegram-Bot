@@ -12,7 +12,7 @@ let results = {
 
 
 async function startBrowser() {
-    const browser = await puppeteer.launch({ slowMo: 30 }); //slowmo 30ms to ensure credentials are entered in a timely manner
+    const browser = await puppeteer.launch({ slowMo: 30 , args: ['--no-sandbox'] }); //slowmo 30ms to ensure credentials are entered in a timely manner
     const page = await browser.newPage();
     return { browser, page };
 }
