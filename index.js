@@ -2,11 +2,12 @@ const { Telegraf } = require('telegraf');
 const Telegram = require('telegraf/telegram');
 const express = require('express');
 const scraper = require('./scraper');
+const bodyParser = require('body-parser');
 const app = express();
 
 const telegram = new Telegram(process.env.BOT_TOKEN);
 const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.telegram.setWebhook(`${process.env.BOT_DOMAIN}/bot${process.env.BOT_TOKEN}`) // comment this out when hosting on local machine
+// bot.telegram.setWebhook(`${process.env.BOT_DOMAIN}/bot${process.env.BOT_TOKEN}`) // comment this out when hosting on local machine
 app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -21,6 +22,7 @@ app.post('/sms', async (req, res) => {
   telegram
     .sendMessage(process.env.CHANNEL_ID, results.message) // req.body.Body
     .catch((err) => console.log(err));
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Express server listening on port ${port}`));
