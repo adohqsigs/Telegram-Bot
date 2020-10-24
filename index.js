@@ -22,6 +22,8 @@ app.post('/sms', async (req, res) => {
   telegram
     .sendMessage(process.env.CHANNEL_ID, results.message) // req.body.Body
     .catch((err) => console.log(err));
+
+  res.send('message was sent');
 });
 
 const port = process.env.PORT || 3000;
