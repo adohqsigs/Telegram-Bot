@@ -1,10 +1,7 @@
 const { Telegraf } = require('telegraf');
-// const { Composer } = require('micro-bot');
-// const bot = new Composer;
 const Telegram = require('telegraf/telegram');
 const express = require('express');
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
-const bodyParser = require('body-parser');
+const scraper = require('./scraper');
 const app = express();
 
 const telegram = new Telegram(process.env.BOT_TOKEN);
@@ -13,21 +10,17 @@ bot.telegram.setWebhook(`${process.env.BOT_DOMAIN}/bot${process.env.BOT_TOKEN}`)
 app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/sms', (req, res) => {
-  // if (req.body.From !== process.env.SOURCE_NO) return res.status(401).send(`User ${req.body.From} not authorised to send messages`);
-  console.log(`${req.body.From} sent an sms to the bot`);
-  const twiml = new MessagingResponse();
+// TODO:
+// 1. anyone can send a post req, so need to authorize request
+// 2. for 2 hour periods, every 5 mins, if cat status changed, send msg, else, do nothing.
+// at end of 2 hour period, if cat status doesnt change, send msg.
 
+app.post('/sms', async (req, res) => {
+  const results = await scraper.scrapWeb(process.env.WEB_LOGIN_URL);
 
   telegram
-    .sendMessage(process.env.CHANNEL_ID, req.body.Body)
+    .sendMessage(process.env.CHANNEL_ID, results.message) // req.body.Body
     .catch((err) => console.log(err));
-
-
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
-
-});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Express server listening on port ${port}`));
