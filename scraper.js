@@ -5,10 +5,7 @@ const C = require('./constants'); //contains all the environmental variables
 const USERNAME_SELECTOR = '#user_login';
 const PASSWORD_SELECTOR = '#pwd';
 const CTA_SELECTOR = '#wp-submit';
-let results = {
-  message: '',
-  isCAT1: false
-};
+let message = '';
 
 
 async function startBrowser() {
@@ -78,29 +75,27 @@ async function scrapWeb(url) {
 
         // display all sector clear if all sector's CAT status is 0
         if (!CAT.includes('1')) {
-            results.isCAT1 = false;
-            results.message = `All Sector Clears: ${validity[0]}`;
+            message = `All Sector Clears: ${validity[0]}`;
         }
         else // show which sector is CAT 1
         {
-            results.isCAT1 = true;
-            results.message = `CAT 1 (${validity[0]})\n`;
-            results.message += `Sector: `
+            message = `CAT 1 (${validity[0]})\n`;
+            message += `Sector: `;
 
             for (var i = 0; i < CAT.length; i++) {
                 if (CAT[i] == 1) {
                     console.log(sector[i]);
-                    results.message += `${sector[i]}`
+                    message += `${sector[i]}`
                 }
             }
 
         }
-        return results
     }
 
     // ends the scrapping session
     await closeBrowser(browser);
-
+    return message
+    
 
 
     //await browser.waitForTarget(()=> false);
