@@ -16,9 +16,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // 2. for 2 hour periods, every 5 mins, if cat status changed, send msg, else, do nothing.
 // at end of 2 hour period, if cat status doesnt change, send msg.
 app.post('/sms', async (req, res) => {
-  const results = await scraper.scrapWeb(process.env.WEB_LOGIN_URL);
+  const message = await scraper.scrapWeb(process.env.WEB_LOGIN_URL);
   telegram
-    .sendMessage(process.env.CHANNEL_ID, results.message) // req.body.Body
+    .sendMessage(process.env.CHANNEL_ID, message) // req.body.Body
     .catch((err) => console.log(err));
 
   res.send('message was sent');
