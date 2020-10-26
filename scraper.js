@@ -94,8 +94,8 @@ async function scrapWeb(url) {
 
     // ends the scrapping session
     await closeBrowser(browser);
-    return message
-    
+    return message;
+
 
 
     //await browser.waitForTarget(()=> false);

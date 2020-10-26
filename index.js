@@ -3,6 +3,7 @@ const Telegram = require('telegraf/telegram');
 const express = require('express');
 const scraper = require('./scraper');
 const bodyParser = require('body-parser');
+const cron = require('node-cron');
 const app = express();
 
 const telegram = new Telegram(process.env.BOT_TOKEN);
@@ -11,17 +12,40 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var fiveMinCounter = 0;
+var twoHourOver = false;
+var prevMessage = '';
+
 // TODO:
 // 1. anyone can send a post req, so need to authorize request
 // 2. for 2 hour periods, every 5 mins, if cat status changed, send msg, else, do nothing.
 // at end of 2 hour period, if cat status doesnt change, send msg.
-app.post('/sms', async (req, res) => {
-  const message = await scraper.scrapWeb(process.env.WEB_LOGIN_URL);
-  telegram
-    .sendMessage(process.env.CHANNEL_ID, message) // req.body.Body
-    .catch((err) => console.log(err));
 
-  res.send('message was sent');
+
+cron.schedule('*/10 * * * * *', async () => {
+    console.log(fiveMinCounter);
+    await scraper.scrapWeb(process.env.WEB_LOGIN_URL)
+        .then((message) => {
+            if (twoHourOver || message !== prevMessage) {
+                telegram
+                    .sendMessage(process.env.CHANNEL_ID, message) // req.body.Body
+                    .then(console.log('message was sent'))
+                    .catch((err) => console.log(err));
+
+                twoHourOver = false;
+                prevMessage = message;
+            };
+
+            if (fiveMinCounter > 23) {
+                fiveMinCounter = 0;
+                twoHourOver = true;
+
+            } else fiveMinCounter++;
+        })
+        .catch((err) => console.log(err));
+
+
+
 });
 
 const port = process.env.PORT || 3000;
