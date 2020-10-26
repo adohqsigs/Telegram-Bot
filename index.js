@@ -35,16 +35,14 @@ cron.schedule('*/5 * * * *', async () => {
                 twoHourOver = false;
                 prevMessage = message;
             };
-
-            if (fiveMinCounter > 23) {
-                fiveMinCounter = 0;
-                twoHourOver = true;
-
-            } else fiveMinCounter++;
         })
         .catch((err) => console.log(err));
 
+        if (fiveMinCounter > 23) {
+            fiveMinCounter = 0;
+            twoHourOver = true;
 
+        } else fiveMinCounter++;
 
 });
 
