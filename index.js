@@ -22,7 +22,7 @@ var prevMessage = '';
 // at end of 2 hour period, if cat status doesnt change, send msg.
 
 
-cron.schedule('*/10 * * * * *', async () => {
+cron.schedule('*/5 * * * *', async () => {
     console.log(fiveMinCounter);
     await scraper.scrapWeb(process.env.WEB_LOGIN_URL)
         .then((message) => {
