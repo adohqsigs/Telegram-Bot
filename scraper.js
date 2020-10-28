@@ -5,8 +5,8 @@ const C = require('./constants'); //contains all the environmental variables
 const USERNAME_SELECTOR = '#user_login';
 const PASSWORD_SELECTOR = '#pwd';
 const CTA_SELECTOR = '#wp-submit';
-let cat_status = `[CAT Status Update]\n`;
-let psi_reading = '[PSI Reading Update]\n';
+
+
 
 
 async function startBrowser() {
@@ -18,6 +18,8 @@ async function startBrowser() {
 
 // core function to scrap CAT 1 details
 async function scrapCAT(url) {
+    let cat_status = `[CAT Status Update]\n`
+
     const { browser, page } = await startBrowser();
     page.setViewport({ width: 1366, height: 1020 });
 
@@ -88,6 +90,8 @@ async function scrapCAT(url) {
 };
 
 async function scrapPSI(url) {
+    let psi_reading = '[PSI Reading Update]\n';
+    
     const { browser, page } = await startBrowser();
     page.setViewport({ width: 1366, height: 1020 });
 
