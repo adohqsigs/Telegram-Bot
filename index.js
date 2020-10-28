@@ -21,7 +21,6 @@ var prevMessage = '';
 
 
 cron.schedule('*/5 * * * *', async () => {
-    console.log(fiveMinCounter);
     await scraper.scrapWeb(process.env.WEB_LOGIN_URL)
         .then((message) => {
             if (message !== prevMessage) {
