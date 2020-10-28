@@ -1,2 +1,2 @@
 # Telegram-Bot
-Welcome to my telegram bot! This bot forwards sms messages sent to a virtual twilio number. The twilio api receives the message sent to the virtual number and sends a request to a web server via webhook url. My web server transfers the message over to the bot and the bot will then send the message to a defined telegram channel through the micro-bot and telegraf apis. It simple but gave me many headaches lol.
+Welcome to my telegram bot! This bot periodically scrapes a website to retrieve weather data at intervals of 5 mins. The data is then formatted in a message to be sent to a dedicated telegram channel.
