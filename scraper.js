@@ -91,7 +91,7 @@ async function scrapCAT(url) {
 
 async function scrapPSI(url) {
     let psi_reading = '[PSI Reading Update]\n';
-    
+
     const { browser, page } = await startBrowser();
     page.setViewport({ width: 1366, height: 1020 });
 
@@ -111,7 +111,8 @@ async function scrapPSI(url) {
 
     // go to CAT 1 related URL upon logging in successfully
     // networkidle0: consider navigation to be finished when there are no more than 0 network connections for at least 500 ms. Solves reading cells of undefined
-    await page.goto(C.psi_url, { waitUntil: 'networkidle0' });
+    await page.goto(C.psi_url);
+    await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
     const tds = await page.evaluate(() => {
         let tds = Array.from(document.querySelectorAll('td'))
