@@ -5,21 +5,19 @@ const C = require('./constants'); //contains all the environmental variables
 const USERNAME_SELECTOR = '#user_login';
 const PASSWORD_SELECTOR = '#pwd';
 const CTA_SELECTOR = '#wp-submit';
-let message = '';
+let cat_status = `[CAT Status Update]\n`;
+let psi_reading = '[PSI Reading Update]\n';
 
 
 async function startBrowser() {
-    const browser = await puppeteer.launch({ slowMo: 30 , args: ['--no-sandbox'] }); //slowmo 30ms to ensure credentials are entered in a timely manner
+    const browser = await puppeteer.launch({ slowMo: 30, headless: false }); //slowmo 30ms to ensure credentials are entered in a timely manner , args: ['--no-sandbox']
     const page = await browser.newPage();
     return { browser, page };
 }
 
-async function closeBrowser(browser) {
-    return browser.close();
-}
 
 // core function to scrap CAT 1 details
-async function scrapWeb(url) {
+async function scrapCAT(url) {
     const { browser, page } = await startBrowser();
     page.setViewport({ width: 1366, height: 1020 });
 
@@ -31,16 +29,9 @@ async function scrapWeb(url) {
     await page.keyboard.type(C.password);
     await page.click(CTA_SELECTOR);
 
-
-
-    // snap a screenshot of the CAT 1 overview
-    //await page.screenshot({ path: 'weather.png' });
-
-
     // go to CAT 1 related URL upon logging in successfully
     // networkidle0: consider navigation to be finished when there are no more than 0 network connections for at least 500 ms. Solves reading cells of undefined
-    await page.goto(C.scrap_url, { waitUntil: 'networkidle0' });
-
+    await page.goto(C.cat_url, { waitUntil: 'networkidle0' });
 
     // Get the cat 1 table results
     let [sector, CAT, validity] = await page.evaluate(() => {
@@ -69,45 +60,87 @@ async function scrapWeb(url) {
         console.log("Not working");
     }
     else {
-        // console.log('Sector:', sector);
-        // console.log('CAT: ', CAT);
-        // console.log('validity: ', validity);
-
         // display all sector clear if all sector's CAT status is 0
         if (!CAT.includes('1')) {
-            message = `All Sectors Clear (${validity[0]})`;
+            cat_status += `All Sectors Clear (${validity[0]})`;
         }
         else // show which sector is CAT 1
         {
-            message = `CAT 1 (${validity[0]})\n`;
-            message += `Sector: `;
+            cat_status += `CAT 1 (${validity[0]})\n`;
+            cat_status += `Sector: `;
 
             for (var i = 0; i < CAT.length; i++) {
                 if (CAT[i] == 1) {
                     console.log(sector[i]);
-                    message += `${sector[i]},`
-                }
-            message.slice(0, -1);
-            }
+                    cat_status += `${sector[i]},`
+                };
+            };
+            cat_status.slice(0, -1);
 
-        }
-    }
+        };
+    };
 
     // ends the scrapping session
-    await closeBrowser(browser);
-    return message;
+    await browser.close();
+    return cat_status;
+
+
+};
+
+async function scrapPSI(url) {
+    const { browser, page } = await startBrowser();
+    page.setViewport({ width: 1366, height: 1020 });
+
+    // perform series of automation for login
+    await page.goto(url);
+    await page.click(USERNAME_SELECTOR);
+    await page.keyboard.type(C.username);
+    await page.click(PASSWORD_SELECTOR);
+    await page.keyboard.type(C.password);
+    await page.click(CTA_SELECTOR);
 
 
 
-    //await browser.waitForTarget(()=> false);
-}
+    // snap a screenshot of the CAT 1 overview
+    //await page.screenshot({ path: 'weather.png' });
 
-// (async () => {
-//     // start scraping by logging in
-//     // TODO:
-//     // 1. retry scrapping web if login fails, happened before but rare.
-//     await scrapWeb(C.login_url);
-//     process.exit(1);
-// })();
 
-exports.scrapWeb = scrapWeb;
+    // go to CAT 1 related URL upon logging in successfully
+    // networkidle0: consider navigation to be finished when there are no more than 0 network connections for at least 500 ms. Solves reading cells of undefined
+    await page.goto(C.psi_url, { waitUntil: 'networkidle0' });
+
+    const tds = await page.evaluate(() => {
+        let tds = Array.from(document.querySelectorAll('td'))
+        return tds.map(td => td.innerText);
+    });
+
+    let psi = [];
+    let prevTd = '';
+
+    for (let td of tds) {
+        if (td === '-' && prevTd !== '-') psi.push(prevTd);
+        prevTd = td;
+    };
+
+    let elevenpmIndex = 90;
+    if (!psi.length) {
+        for (let i = 0; i <= 5; i++) {
+            psi.push(tds[elevenpmIndex + i * 13]);
+        }
+    };
+
+    psi_reading += `North: ${psi[0]}\n`;
+    psi_reading += `South: ${psi[1]}\n`;
+    psi_reading += `East: ${psi[2]}\n`;
+    psi_reading += `West: ${psi[3]}\n`;
+    psi_reading += `Central: ${psi[4]}\n`;
+    psi_reading += `Overall: ${psi[5]}\n`;
+
+    await browser.close();
+    return psi_reading
+
+};
+
+
+exports.scrapCAT = scrapCAT;
+exports.scrapPSI = scrapPSI;

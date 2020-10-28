@@ -12,28 +12,32 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var prevMessage = '';
-
-// TODO:
-// 1. anyone can send a post req, so need to authorize request
-// 2. for 2 hour periods, every 5 mins, if cat status changed, send msg, else, do nothing.
-// at end of 2 hour period, if cat status doesnt change, send msg.
-
+var prevCAT = '';
 
 cron.schedule('*/5 * * * *', async () => {
-    await scraper.scrapWeb(process.env.WEB_LOGIN_URL)
+    await scraper.scrapCAT(process.env.WEB_LOGIN_URL)
         .then((message) => {
-            if (message !== prevMessage) {
+            if (message !== prevCAT) {
                 telegram
-                    .sendMessage(process.env.CHANNEL_ID, message) // req.body.Body
-                    .then(console.log('message was sent'))
+                    .sendMessage(process.env.CHANNEL_ID, message)
+                    .then(console.log('cat status was sent'))
                     .catch((err) => console.log(err));
 
-                prevMessage = message;
+                prevCAT = message;
             };
         })
         .catch((err) => console.log(err));
+});
 
+cron.schedule('30 */1 * * *', async () => {
+    await scraper.scrapPSI(process.env.WEB_LOGIN_URL)
+        .then((message) => {
+            telegram
+                .sendMessage(process.env.CHANNEL_ID, message)
+                .then(console.log('psi reading was sent'))
+                .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
 });
 
 const port = process.env.PORT || 3000;
