@@ -10,7 +10,7 @@ let psi_reading = '[PSI Reading Update]\n';
 
 
 async function startBrowser() {
-    const browser = await puppeteer.launch({ slowMo: 30, headless: false }); //slowmo 30ms to ensure credentials are entered in a timely manner , args: ['--no-sandbox']
+    const browser = await puppeteer.launch({ slowMo: 30, args: ['--no-sandbox']); //slowmo 30ms to ensure credentials are entered in a timely manner , args: ['--no-sandbox']
     const page = await browser.newPage();
     return { browser, page };
 }
