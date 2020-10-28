@@ -12,8 +12,6 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var fiveMinCounter = 0;
-var twoHourOver = false;
 var prevMessage = '';
 
 // TODO:
@@ -26,23 +24,16 @@ cron.schedule('*/5 * * * *', async () => {
     console.log(fiveMinCounter);
     await scraper.scrapWeb(process.env.WEB_LOGIN_URL)
         .then((message) => {
-            if (twoHourOver || message !== prevMessage) {
+            if (message !== prevMessage) {
                 telegram
                     .sendMessage(process.env.CHANNEL_ID, message) // req.body.Body
                     .then(console.log('message was sent'))
                     .catch((err) => console.log(err));
 
-                twoHourOver = false;
                 prevMessage = message;
             };
         })
         .catch((err) => console.log(err));
-
-        if (fiveMinCounter > 23) {
-            fiveMinCounter = 0;
-            twoHourOver = true;
-
-        } else fiveMinCounter++;
 
 });
 
