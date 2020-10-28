@@ -87,6 +87,7 @@ async function scrapWeb(url) {
                     console.log(sector[i]);
                     message += `${sector[i]},`
                 }
+            message.slice(0, -1);
             }
 
         }
