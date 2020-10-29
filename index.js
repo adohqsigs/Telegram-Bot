@@ -29,7 +29,7 @@ cron.schedule('*/5 * * * *', async () => {
         .catch((err) => console.log(err));
 });
 
-cron.schedule('30 */5 * * * *', async () => {
+cron.schedule('32 */1 * * *', async () => {
     await scraper.scrapPSI(process.env.WEB_LOGIN_URL)
         .then((message) => {
             telegram
