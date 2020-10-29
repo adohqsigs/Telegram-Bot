@@ -77,7 +77,7 @@ async function scrapCAT(url) {
                     cat_status += `${sector[i]},`
                 };
             };
-            cat_status.slice(0, -1);
+            cat_status = cat_status.slice(0, -1);
 
         };
     };
