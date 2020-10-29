@@ -111,7 +111,7 @@ async function scrapPSI(url) {
 
     // go to CAT 1 related URL upon logging in successfully
     // networkidle0: consider navigation to be finished when there are no more than 0 network connections for at least 500 ms. Solves reading cells of undefined
-    await page.goto(C.psi_url, { waitUntil: 'load' });
+    await page.goto(C.psi_url, { waitUntil: 'domcontentloaded' });
 
     const tds = await page.evaluate(() => {
         let tds = Array.from(document.querySelectorAll('td'))
