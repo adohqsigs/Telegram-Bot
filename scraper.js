@@ -134,6 +134,16 @@ async function scrapPSI(url) {
         prevTd = td;
     };
 
+    //11am case
+    let elevenamIndex = 12;
+    if (psi[0] === 'North') {
+        psi = [];
+        for (let i = 0; i <= 5; i++) {
+            psi.push(tds[elevenamIndex + i * 13]);
+        }
+    }
+
+    // 11pm case
     let elevenpmIndex = 90;
     if (!psi.length) {
         for (let i = 0; i <= 5; i++) {
