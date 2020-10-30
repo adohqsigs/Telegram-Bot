@@ -55,7 +55,6 @@ async function scrapCAT(url) {
             ];
         }
 
-
     });
     if (!sector || !CAT || !validity) {
         // sector or CAT or validity is undefined
@@ -68,17 +67,26 @@ async function scrapCAT(url) {
         }
         else // show which sector is CAT 1
         {
-            cat_status += `CAT 1 (${validity[0]})\n`;
-            cat_status += `Sector: `;
+            let catGrouping = {};
 
+            cat_status += `CAT 1:\n`;
+
+            // grouping validity period with sectors
             for (var i = 0; i < CAT.length; i++) {
                 if (CAT[i] == 1) {
-                    console.log(sector[i]);
-                    cat_status += `${sector[i]},`
+                    if (validity[i] in catGrouping) {
+                        catGrouping[validity[i]] += sector[i] + ',';
+
+                    } else {
+                        catGrouping[validity[i]] = sector[i] + ',';
+
+                    };
                 };
             };
-            cat_status = cat_status.slice(0, -1);
 
+            for (let key in catGrouping) {
+                cat_status += `${catGrouping[key].slice(0, -1)} (${key})\n`;
+            };
         };
     };
 
