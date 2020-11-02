@@ -85,7 +85,7 @@ async function scrapCAT(url) {
             };
 
             for (let key in catGrouping) {
-                cat_status += `${catGrouping[key].slice(0, -1)} (${key})\n`;
+                cat_status += `[${key}]\n${catGrouping[key].slice(0, -1)}\n\n`;
             };
         };
     };
