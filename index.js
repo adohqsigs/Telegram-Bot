@@ -29,7 +29,7 @@ cron.schedule('*/5 * * * *', async () => {
         .catch((err) => console.log(err));
 });
 
-cron.schedule('42 */1 * * *', async () => {
+cron.schedule('57 */1 * * *', async () => {
     await scraper.scrapPSI(process.env.WEB_LOGIN_URL)
         .then((message) => {
             if (process.env.RUN_PSI === 'yes') {
