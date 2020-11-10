@@ -89,8 +89,7 @@ async function scrapCAT(url) {
             };
 
             for (let key in catGrouping) {
-                let [periodStart, periodEnd] = key.split()
-                cat_status += `(${periodStart} to ${periodEnd})\n${catGrouping[key].slice(0, -1)}\n\n`;
+                cat_status += `(${key})\n${catGrouping[key].slice(0, -1)}\n\n`;
             };
         };
     };
@@ -132,7 +131,7 @@ async function scrapPSI(url) {
           return tds.map(td => td.innerText);
       });
     };
-
+    
 
     await browser.close();
 
