@@ -29,18 +29,20 @@ cron.schedule('*/5 * * * *', async () => {
         .catch((err) => console.log(err));
 });
 
-cron.schedule('57 */1 * * *', async () => {
-    await scraper.scrapPSI(process.env.WEB_LOGIN_URL)
-        .then((message) => {
-            if (process.env.RUN_PSI === 'yes') {
-                telegram
-                    .sendMessage(process.env.CHANNEL_ID, message)
-                    .then(console.log('psi reading was sent'))
-                    .catch((err) => console.log(err));
-            };
+// cron.schedule('32 */1 * * *', async () => {
+//     await scraper.scrapPSI(process.env.WEB_LOGIN_URL)
+//         .then((message) => {
+//             if (process.env.RUN_PSI === 'yes') {
+//                 telegram
+//                     .sendMessage(process.env.CHANNEL_ID, message)
+//                     .then(console.log('psi reading was sent'))
+//                     .catch((err) => console.log(err));
+//             };
 
-        }).catch((err) => console.log(err));
-});
+//         }).catch((err) => console.log(err));
+// });
+
+console.log(process.env.RUN_PSI === 'yes');
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Express server listening on port ${port}`));
