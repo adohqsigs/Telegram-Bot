@@ -122,12 +122,16 @@ async function scrapPSI(url) {
 
     // go to CAT 1 related URL upon logging in successfully
     // networkidle0: consider navigation to be finished when there are no more than 0 network connections for at least 500 ms. Solves reading cells of undefined
-    await page.goto(C.psi_url, { waitUntil: 'networkidle0' });
+    let tds
+    while (!tds) {
+      await page.goto(C.psi_url, { waitUntil: 'networkidle0' });
 
-    const tds = await page.evaluate(() => {
-        let tds = Array.from(document.querySelectorAll('td'))
-        return tds.map(td => td.innerText);
-    });
+      const tds = await page.evaluate(() => {
+          let tds = Array.from(document.querySelectorAll('td'))
+          return tds.map(td => td.innerText);
+      });
+    };
+    
 
     await browser.close();
 
