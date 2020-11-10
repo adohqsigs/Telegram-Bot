@@ -59,7 +59,7 @@ async function scrapCAT(url) {
 
     // ends the scrapping session
     await browser.close();
-    
+
     if (!sector || !CAT || !validity) {
         // sector or CAT or validity is undefined
         console.log("Not working");
@@ -89,7 +89,7 @@ async function scrapCAT(url) {
             };
 
             for (let key in catGrouping) {
-                cat_status += `[${key}]\n${catGrouping[key].slice(0, -1)}\n\n`;
+                cat_status += `(${key})\n${catGrouping[key].slice(0, -1)}\n\n`;
             };
         };
     };
