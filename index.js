@@ -32,15 +32,14 @@ cron.schedule('*/5 * * * *', async () => {
 cron.schedule('32 */1 * * *', async () => {
     await scraper.scrapPSI(process.env.WEB_LOGIN_URL)
         .then((message) => {
-            if (process.env.RUN_PSI !== 'no') {
+            if (process.env.RUN_PSI === 'yes') {
                 telegram
                     .sendMessage(process.env.CHANNEL_ID, message)
                     .then(console.log('psi reading was sent'))
                     .catch((err) => console.log(err));
-            }
+            };
 
-        })
-        .catch((err) => console.log(err));
+        }).catch((err) => console.log(err));
 });
 
 const port = process.env.PORT || 3000;
