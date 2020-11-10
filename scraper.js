@@ -56,6 +56,10 @@ async function scrapCAT(url) {
         }
 
     });
+
+    // ends the scrapping session
+    await browser.close();
+
     if (!sector || !CAT || !validity) {
         // sector or CAT or validity is undefined
         console.log("Not working");
@@ -90,8 +94,7 @@ async function scrapCAT(url) {
         };
     };
 
-    // ends the scrapping session
-    await browser.close();
+
     return cat_status;
 
 
@@ -126,6 +129,8 @@ async function scrapPSI(url) {
         return tds.map(td => td.innerText);
     });
 
+    await browser.close();
+
     let psi = [];
     let prevTd = '';
 
@@ -158,7 +163,7 @@ async function scrapPSI(url) {
     psi_reading += `Central: ${psi[4]}\n`;
     psi_reading += `Overall: ${psi[5]}\n`;
 
-    await browser.close();
+
     return psi_reading
 
 };
