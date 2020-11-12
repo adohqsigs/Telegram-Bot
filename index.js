@@ -42,7 +42,7 @@ cron.schedule('32 */1 * * *', async () => {
         }).catch((err) => console.log(err));
 });
 
-app.listen('/ping', (req, res) => {
+app.get('/ping', (req, res) => {
   res.status(200).send('im awake');
 });
 
