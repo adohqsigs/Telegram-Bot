@@ -24,7 +24,7 @@ async function scrapCAT(url) {
     page.setViewport({ width: 1366, height: 1020 });
 
     // perform series of automation for login
-    await page.goto(url);
+    await page.goto(url, { waitUntil: 'load', timeout: 0 });
     await page.click(USERNAME_SELECTOR);
     await page.keyboard.type(C.username);
     await page.click(PASSWORD_SELECTOR);
@@ -107,7 +107,7 @@ async function scrapPSI(url) {
     page.setViewport({ width: 1366, height: 1020 });
 
     // perform series of automation for login
-    await page.goto(url);
+    await page.goto(url, { waitUntil: 'load', timeout: 0 });
     await page.click(USERNAME_SELECTOR);
     await page.keyboard.type(C.username);
     await page.click(PASSWORD_SELECTOR);
