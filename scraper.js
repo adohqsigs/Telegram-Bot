@@ -33,12 +33,13 @@ async function scrapCAT(url) {
 
     // go to CAT 1 related URL upon logging in successfully
     // networkidle0: consider navigation to be finished when there are no more than 0 network connections for at least 500 ms. Solves reading cells of undefined
-    await page.goto(C.cat_url, { waitUntil: 'networkidle0' });
+    await page.goto(C.cat_url, { waitUntil: 'networkidle0', timeout: 0  });
 
     // Get the cat 1 table results
     let [sector, CAT, validity] = await page.evaluate(() => {
 
         var nodes = document.querySelectorAll('tr');
+        if (!nodes) return [[], [], []]
         // nodes as of now, first sector is index [4], last sector is index [35]
         var list = [];
         var i;
@@ -123,12 +124,15 @@ async function scrapPSI(url) {
     // go to CAT 1 related URL upon logging in successfully
     // networkidle0: consider navigation to be finished when there are no more than 0 network connections for at least 500 ms. Solves reading cells of undefined
 
-    await page.goto(C.psi_url, { waitUntil: 'networkidle0' });
+    await page.goto(C.psi_url, { waitUntil: 'networkidle0', timeout: 0 });
 
-    const tds = await page.evaluate(() => {
-        let tds = Array.from(document.querySelectorAll('td'))
-        return tds.map(td => td.innerText);
-    });
+    let list = [];
+    while (!list[0]) {
+        const tds = await page.evaluate(() => {
+            let tds = Array.from(document.querySelectorAll('td'))
+            return tds.map(td => td.innerText);
+        });
+    };
 
     await browser.close();
 
