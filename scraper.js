@@ -39,7 +39,7 @@ async function scrapCAT(url) {
     let [sector, CAT, validity] = await page.evaluate(() => {
 
         var nodes = document.querySelectorAll('tr');
-        if (!nodes) return [[], [], []]
+        if (!nodes[0]) return [[], [], []]
         // nodes as of now, first sector is index [4], last sector is index [35]
         var list = [];
         var i;
@@ -128,7 +128,7 @@ async function scrapPSI(url) {
 
     let tds = [];
     while (!tds[0]) {
-        const tds = await page.evaluate(() => {
+        tds = await page.evaluate(() => {
             let tds = Array.from(document.querySelectorAll('td'))
             return tds.map(td => td.innerText);
         });
