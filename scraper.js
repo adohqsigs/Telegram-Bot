@@ -126,8 +126,8 @@ async function scrapPSI(url) {
 
     await page.goto(C.psi_url, { waitUntil: 'networkidle0', timeout: 0 });
 
-    let list = [];
-    while (!list[0]) {
+    let tds = [];
+    while (!tds[0]) {
         const tds = await page.evaluate(() => {
             let tds = Array.from(document.querySelectorAll('td'))
             return tds.map(td => td.innerText);
