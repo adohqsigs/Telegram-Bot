@@ -8,7 +8,6 @@ const app = express();
 
 const telegram = new Telegram(process.env.BOT_TOKEN);
 const bot = new Telegraf(process.env.BOT_TOKEN);
-// bot.telegram.setWebhook(`${process.env.BOT_DOMAIN}/bot${process.env.BOT_TOKEN}`) // comment this out when hosting on local machine
 app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -17,7 +16,7 @@ var prevCAT = '';
 cron.schedule('*/5 * * * *', async () => {
     await scraper.scrapCAT(process.env.WEB_LOGIN_URL)
         .then((message) => {
-            if (message !== prevCAT) {
+            if (message !== prevCAT && !message.includes('undefined')) {
                 telegram
                     .sendMessage(process.env.CHANNEL_ID, message)
                     .then(console.log('cat status was sent'))

@@ -39,7 +39,6 @@ async function scrapCAT(url) {
     let [sector, CAT, validity] = await page.evaluate(() => {
 
         var nodes = document.querySelectorAll('tr');
-        if (!nodes[0]) return [[], [], []]
         // nodes as of now, first sector is index [4], last sector is index [35]
         var list = [];
         var i;
@@ -114,15 +113,6 @@ async function scrapPSI(url) {
     await page.click(PASSWORD_SELECTOR);
     await page.keyboard.type(C.password);
     await page.click(CTA_SELECTOR);
-
-
-
-    // snap a screenshot of the CAT 1 overview
-    //await page.screenshot({ path: 'weather.png' });
-
-
-    // go to CAT 1 related URL upon logging in successfully
-    // networkidle0: consider navigation to be finished when there are no more than 0 network connections for at least 500 ms. Solves reading cells of undefined
 
     await page.goto(C.psi_url, { waitUntil: 'networkidle0', timeout: 0 });
 
