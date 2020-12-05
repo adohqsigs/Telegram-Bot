@@ -19,10 +19,10 @@ cron.schedule('*/5 * * * *', async () => {
             if (message !== prevCAT && !message.includes('undefined')) {
                 telegram
                     .sendMessage(process.env.CHANNEL_ID, message)
-                    .then(console.log('cat status was sent'))
-                    .catch((err) => console.log(err));
-
-                prevCAT = message;
+                    .then(() => {
+                        console.log('cat status was sent');
+                        prevCAT = message;
+                    }).catch((err) => console.log(err));
             };
         })
         .catch((err) => console.log(err));
