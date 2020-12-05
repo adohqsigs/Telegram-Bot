@@ -22,6 +22,7 @@ These variables are used to give the bot and the scripts information that is pri
 - `WEB_LOGIN_URL` website url
 - `WEB_CAT_URL` url for cat status page on website
 - `WEB_PSI_URL` url for psi readings page on website
+- `RUN_PSI` toggles psi reading messages(yes/no)
 
 ## Controlling the bot on the EC2 instance
 
