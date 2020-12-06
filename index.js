@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var prevCAT = '';
 
 cron.schedule('*/5 * * * *', async () => {
-    await scraper.scrapCAT(process.env.WEB_LOGIN_URL)
+    const { browser, page } = await scraper.startBrowser();
+    await scraper.scrapCAT(process.env.WEB_LOGIN_URL, page)
         .then((message) => {
             if (message !== prevCAT && !message.includes('undefined')) {
                 telegram
@@ -26,10 +27,13 @@ cron.schedule('*/5 * * * *', async () => {
             };
         })
         .catch((err) => console.log(err));
+
+    await browser.close();
 });
 
 cron.schedule('32 */1 * * *', async () => {
-    await scraper.scrapPSI(process.env.WEB_LOGIN_URL)
+    const { browser, page } = await scraper.startBrowser();
+    await scraper.scrapPSI(process.env.WEB_LOGIN_URL, page)
         .then((message) => {
             if (process.env.RUN_PSI === 'yes') {
                 telegram
@@ -38,7 +42,10 @@ cron.schedule('32 */1 * * *', async () => {
                     .catch((err) => console.log(err.message));
             };
 
-        }).catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+
+    await browser.close();
 });
 
 const port = process.env.PORT || 3000;

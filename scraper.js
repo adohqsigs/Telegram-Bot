@@ -17,10 +17,9 @@ async function startBrowser() {
 
 
 // core function to scrap CAT 1 details
-async function scrapCAT(url) {
+async function scrapCAT(url, page) {
     let cat_status = `[CAT Status Update] ⚡\n`
 
-    const { browser, page } = await startBrowser();
     page.setViewport({ width: 1366, height: 1020 });
 
     // perform series of automation for login
@@ -56,8 +55,6 @@ async function scrapCAT(url) {
 
     });
 
-    // ends the scrapping session
-    await browser.close();
 
     if (!sector || !CAT || !validity) {
         // items in sector or CAT or validity are undefined
@@ -99,10 +96,9 @@ async function scrapCAT(url) {
 
 };
 
-async function scrapPSI(url) {
+async function scrapPSI(url, page) {
     let psi_reading = '[PSI Reading Update] 🌫\n';
 
-    const { browser, page } = await startBrowser();
     page.setViewport({ width: 1366, height: 1020 });
 
     // perform series of automation for login
@@ -122,8 +118,6 @@ async function scrapPSI(url) {
             return tds.map(td => td.innerText);
         });
     };
-
-    await browser.close();
 
     let psi = [];
     let prevTd = '';
@@ -165,3 +159,4 @@ async function scrapPSI(url) {
 
 exports.scrapCAT = scrapCAT;
 exports.scrapPSI = scrapPSI;
+exports.startBrowser = startBrowser;
