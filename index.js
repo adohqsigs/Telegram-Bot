@@ -22,7 +22,7 @@ cron.schedule('*/5 * * * *', async () => {
                     .then(() => {
                         console.log('cat status was sent');
                         prevCAT = message;
-                    }).catch((err) => console.log(err));
+                    }).catch((err) => console.log(err.message));
             };
         })
         .catch((err) => console.log(err));
@@ -35,7 +35,7 @@ cron.schedule('32 */1 * * *', async () => {
                 telegram
                     .sendMessage(process.env.CHANNEL_ID, message)
                     .then(console.log('psi reading was sent'))
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.log(err.message));
             };
 
         }).catch((err) => console.log(err));
