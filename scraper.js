@@ -23,7 +23,7 @@ async function scrapCAT(url, page) {
     page.setViewport({ width: 1366, height: 1020 });
 
     // perform series of automation for login
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 0 });
+    await page.goto(url, { waitUntil: 'networkidle0', timeout: 0 });
     await page.click(USERNAME_SELECTOR);
     await page.keyboard.type(C.username);
     await page.click(PASSWORD_SELECTOR);
@@ -32,7 +32,7 @@ async function scrapCAT(url, page) {
 
     // go to CAT 1 related URL upon logging in successfully
     // networkidle0: consider navigation to be finished when there are no more than 0 network connections for at least 500 ms. Solves reading cells of undefined
-    await page.goto(C.cat_url, { waitUntil: 'networkidle2', timeout: 0  });
+    await page.goto(C.cat_url, { waitUntil: 'networkidle0', timeout: 0  });
 
     // Get the cat 1 table results
     let [sector, CAT, validity] = await page.evaluate(() => {
@@ -102,14 +102,14 @@ async function scrapPSI(url, page) {
     page.setViewport({ width: 1366, height: 1020 });
 
     // perform series of automation for login
-    await page.goto(url, { waitUntil: 'load', timeout: 0 });
+    await page.goto(url, { waitUntil: 'networkidle0', timeout: 0 });
     await page.click(USERNAME_SELECTOR);
     await page.keyboard.type(C.username);
     await page.click(PASSWORD_SELECTOR);
     await page.keyboard.type(C.password);
     await page.click(CTA_SELECTOR);
 
-    await page.goto(C.psi_url, { waitUntil: 'networkidle2', timeout: 0 });
+    await page.goto(C.psi_url, { waitUntil: 'networkidle0', timeout: 0 });
 
     let tds = [];
     while (!tds[0]) {
