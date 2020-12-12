@@ -13,6 +13,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var prevCAT = '';
 
+// schedules a webscrape of the cat status webapage every 5 minutes
+// if new cat status is different from prev cat status, send a message to channel
+// prevCat only updated when a message has been sent
 cron.schedule('*/5 * * * *', async () => {
     const { browser, page } = await scraper.startBrowser();
     await scraper.scrapCAT(process.env.WEB_LOGIN_URL, page)
@@ -31,6 +34,8 @@ cron.schedule('*/5 * * * *', async () => {
     await browser.close();
 });
 
+// schedules a websrape of the psi reading webpage every 32nd minute of every hour
+// 32m was chosen to give the website enough time to update for the hour as well as to not coincide with the 5 min cat webscrape
 cron.schedule('32 */1 * * *', async () => {
     const { browser, page } = await scraper.startBrowser();
     await scraper.scrapPSI(process.env.WEB_LOGIN_URL, page)

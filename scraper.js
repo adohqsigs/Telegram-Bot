@@ -111,6 +111,7 @@ async function scrapPSI(url, page) {
 
     await page.goto(C.psi_url, { waitUntil: 'networkidle0', timeout: 0 });
 
+    // gets psi table results
     let tds = [];
     while (!tds[0]) {
         tds = await page.evaluate(() => {
@@ -119,6 +120,8 @@ async function scrapPSI(url, page) {
         });
     };
 
+    // gets the latest on the DOM table
+    // doesnt work for 11am and 11pm, see below
     let psi = [];
     let prevTd = '';
 
@@ -127,7 +130,7 @@ async function scrapPSI(url, page) {
         prevTd = td;
     };
 
-    //11am case
+    // 11am case
     let elevenamIndex = 12;
     if (psi[0] === 'North') {
         psi = [];
