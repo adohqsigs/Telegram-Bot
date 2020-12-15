@@ -30,15 +30,26 @@ Begin by ssh-ing into the ec2 instance, which you will need access to the aws ac
 
 ### Starting the bot
 
-Make sure to `cd Telegram-Bot` beforehand
+Make sure to `cd Telegram-Bot` beforehand...
+-E tells sudo to preserve the env vars, without it the scripts can't read env vars.
 
 ```
-$ pm2 start index.js
+$ sudo -E passenger start
 ```
 
 ### Changing/Adding env vars
-```
-$ CHANNEL_ID=<channelid> pm2 restart index.js --update-env
-```
 
-See [PM2 Docs](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/) for more info
+```
+$ export CHANNEL_ID=<channelid>
+$ sudo passenger stop
+$ sudo -E passenger start
+```
+Technically, there is an alternative to stopping then starting the app, which is the restart-app command but it is more complicated to use.
+To do `restart-app`...
+```
+$ sudo -E -u appuser -H bash -l
+$ passenger-config restart-app
+```
+then `$ exit` to return to ubuntu admin
+
+See [Phusion Passenger Docs](https://www.phusionpassenger.com/library/) for more info
