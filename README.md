@@ -30,7 +30,7 @@ Begin by ssh-ing into the ec2 instance, which you will need access to the aws ac
 
 ### Starting the bot
 
-Make sure to `cd Telegram-Bot` beforehand...
+Make sure to `cd Telegram-Bot` beforehand.../n
 -E tells sudo to preserve the env vars, without it the scripts can't read env vars.
 
 ```
@@ -44,7 +44,7 @@ $ export CHANNEL_ID=<channelid>
 $ sudo passenger stop
 $ sudo -E passenger start
 ```
-Technically, there is an alternative to stopping then starting the app, which is the restart-app command but it is more complicated to use.
+Technically, there is an alternative to stopping then starting the app, which is the restart-app command but it is more complicated to use./n
 To do `restart-app`...
 ```
 $ sudo -E -u appuser -H bash -l
