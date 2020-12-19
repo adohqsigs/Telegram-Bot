@@ -42,7 +42,7 @@ Make sure you are in the root directory, then
 ```
 $ nano .bashrc
 ```
-Scroll to the bottom with Alt + /, and change/add your env vars.
+Scroll to the bottom with Alt + /, and change/add your env vars, then Ctrl + X to save.
 After changing the env vars, you need to restart the bot.
 
 To do `restart-app`...
