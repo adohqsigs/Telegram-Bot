@@ -33,7 +33,7 @@ Begin by ssh-ing into the ec2 instance, which you will need access to the aws ac
 Make sure you are in bot directory [`~/Telegram-Bot`], then
 
 ```
-$ sudo passenger start
+$ sudo -E passenger start
 ```
 
 ### Changing/Adding env vars
