@@ -30,26 +30,16 @@ Begin by ssh-ing into the ec2 instance, which you will need access to the aws ac
 
 ### Starting the bot
 
-Make sure you are in bot directory [`~/Telegram-Bot`], then
+Make sure you are in bot directory [`cd Telegram-Bot`], then
 
 ```
-$ sudo -E passenger start
+$ pm2 start index.js
 ```
 
 ### Changing/Adding env vars
 
-Make sure you are in the root directory, then
 ```
-$ nano .bashrc
+$ CHANNEL_ID=<channelid> pm2 restart index.js --update-env
 ```
-Scroll to the bottom with Alt + /, and change/add your env vars, then Ctrl + X to save.
-After changing the env vars, you need to restart the bot.
 
-To do `restart-app`...
-```
-$ sudo -E -u appuser -H bash -l
-$ passenger-config restart-app
-```
-then `$ exit` to return to ubuntu admin
-
-See [Phusion Passenger Docs](https://www.phusionpassenger.com/library/) for more info
+See [PM2 Docs](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/) for more info
