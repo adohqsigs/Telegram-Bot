@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This bot scrapes weather data from a website to format into a message, which is then broadcasted on a dedicated telegram channel. 
+This bot scrapes weather data from a website to format into a message, which is then broadcasted to a dedicated telegram channel. 
 The script was written in Nodejs and is run on an AWS EC2 environment.
 
 ## Features
@@ -30,13 +30,14 @@ Begin by ssh-ing into the ec2 instance, which you will need access to the aws ac
 
 ### Starting the bot
 
-Make sure to `cd Telegram-Bot` beforehand
+Make sure you are in bot directory [`cd Telegram-Bot`], then
 
 ```
 $ pm2 start index.js
 ```
 
 ### Changing/Adding env vars
+
 ```
 $ CHANNEL_ID=<channelid> pm2 restart index.js --update-env
 ```
