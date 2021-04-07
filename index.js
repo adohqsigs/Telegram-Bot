@@ -31,6 +31,7 @@ cron.schedule('*/5 * * * *', async () => {
         })
         .catch((err) => console.log(err));
 
+    await page.close();
     await browser.close();
 });
 
@@ -49,7 +50,8 @@ cron.schedule('32 */1 * * *', async () => {
 
         })
         .catch((err) => console.log(err));
-
+    
+    await page.close();
     await browser.close();
 });
 
