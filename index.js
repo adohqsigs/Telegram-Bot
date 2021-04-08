@@ -12,7 +12,7 @@ app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var prevCAT = '';
-const page;
+var page;
 // schedules a webscrape of the cat status webapage every 5 minutes
 // if new cat status is different from prev cat status, send a message to channel
 // prevCat only updated when a message has been sent
