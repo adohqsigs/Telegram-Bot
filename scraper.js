@@ -7,6 +7,15 @@ const PASSWORD_SELECTOR = '#pwd';
 const CTA_SELECTOR = '#wp-submit';
 
 
+
+
+async function startBrowser() {
+    const browser = await puppeteer.launch({ slowMo: 30, args: ['--no-sandbox','--headless','--disable-gpu','--single-process','--no-zygote']}); //slowmo 30ms to ensure credentials are entered in a timely manner
+    const page = await browser.newPage();
+    return page;
+}
+
+
 // core function to scrap CAT 1 details
 async function scrapCAT(url, page) {
     let cat_status = `[CAT Status Update] ⚡\n`
