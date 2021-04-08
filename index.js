@@ -12,13 +12,13 @@ app.use(bot.webhookCallback(`/bot${process.env.BOT_TOKEN}`));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var prevCAT = '';
-
+const page;
 // schedules a webscrape of the cat status webapage every 5 minutes
 // if new cat status is different from prev cat status, send a message to channel
 // prevCat only updated when a message has been sent
 cron.schedule('*/5 * * * *', async () => {
     if (!page) {
-        const page = await scraper.startBrowser();
+        page = await scraper.startBrowser();
     };
     await scraper.scrapCAT(process.env.WEB_LOGIN_URL, page)
         .then((message) => {
@@ -39,7 +39,7 @@ cron.schedule('*/5 * * * *', async () => {
 // 32m was chosen to give the website enough time to update for the hour as well as to not coincide with the 5 min cat webscrape
 cron.schedule('32 */1 * * *', async () => {
     if (!page) {
-        const page = await scraper.startBrowser();
+        page = await scraper.startBrowser();
     };
     await scraper.scrapPSI(process.env.WEB_LOGIN_URL, page)
         .then((message) => {
@@ -53,8 +53,6 @@ cron.schedule('32 */1 * * *', async () => {
         })
         .catch((err) => console.log(err));
 
-    await page.close();
-    await browser.close();
 });
 
 const port = process.env.PORT || 3000;
