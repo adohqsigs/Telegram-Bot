@@ -10,7 +10,7 @@ const CTA_SELECTOR = '#wp-submit';
 
 
 async function startBrowser() {
-    const browser = await puppeteer.launch({ slowMo: 30, args: ['--no-sandbox']}); //slowmo 30ms to ensure credentials are entered in a timely manner , args: ['--no-sandbox']
+    const browser = await puppeteer.launch({ slowMo: 30, args: ['--no-sandbox','--headless','--disable-gpu','--single-process','--no-zygote']}); //slowmo 30ms to ensure credentials are entered in a timely manner
     const page = await browser.newPage();
     return { browser, page };
 }
