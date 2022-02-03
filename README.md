@@ -39,7 +39,9 @@ $ pm2 start index.js
 ### Changing/Adding env vars
 
 ```
-$ CHANNEL_ID=<channelid> pm2 restart index.js --update-env
+$ sudo nano ~/.bashrc
 ```
+Crtl-X, Y and Enter to save changes to environment variable file
+
 
 See [PM2 Docs](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/) for more info
