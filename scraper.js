@@ -155,7 +155,7 @@ async function scrapPSI(url, page) {
     message += `Overall: ${psi[5]}\n`;
 
 
-    return message, psi
+    return [message, psi]
 
 };
 
