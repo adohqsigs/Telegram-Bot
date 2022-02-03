@@ -42,8 +42,8 @@ cron.schedule('32 */1 * * *', async () => {
         page = await scraper.startBrowser();
     };
     await scraper.scrapPSI(process.env.WEB_LOGIN_URL, page)
-        .then((message) => {
-            if (process.env.RUN_PSI === 'yes') {
+        .then((message, psi) => {
+            if (process.env.RUN_PSI === 'yes' && psi.some(reading => parseInt(reading) > 100)) {
                 telegram
                     .sendMessage(process.env.CHANNEL_ID, message)
                     .then(console.log('psi reading was sent'))

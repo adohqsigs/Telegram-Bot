@@ -18,7 +18,7 @@ async function startBrowser() {
 
 // core function to scrap CAT 1 details
 async function scrapCAT(url, page) {
-    let cat_status = `[CAT Status Update] ⚡\n`
+    let message = `[CAT Status Update] ⚡\n`
 
     page.setViewport({ width: 1366, height: 1020 });
 
@@ -63,13 +63,13 @@ async function scrapCAT(url, page) {
     else {
         // display all sector clear if all sector's CAT status is 0
         if (!CAT.includes('1')) {
-            cat_status += `All Sectors Clear (${validity[0]})`;
+            message += `All Sectors Clear (${validity[0]})`;
         }
         else // show which sector is CAT 1
         {
             let catGrouping = {};
 
-            cat_status += `CAT 1:\n`;
+            message += `CAT 1:\n`;
 
             // grouping validity period with sectors
             for (var i = 0; i < CAT.length; i++) {
@@ -85,19 +85,19 @@ async function scrapCAT(url, page) {
             };
 
             for (let key in catGrouping) {
-                cat_status += `(${key})\n${catGrouping[key].slice(0, -1)}\n\n`;
+                message += `(${key})\n${catGrouping[key].slice(0, -1)}\n\n`;
             };
         };
     };
 
 
-    return cat_status;
+    return message;
 
 
 };
 
 async function scrapPSI(url, page) {
-    let psi_reading = '[PSI Reading Update] 🌫\n';
+    let message = '[24hrs PSI Reading Update] 🌫\n';
 
     page.setViewport({ width: 1366, height: 1020 });
 
@@ -147,15 +147,15 @@ async function scrapPSI(url, page) {
         }
     };
 
-    psi_reading += `North: ${psi[0]}\n`;
-    psi_reading += `South: ${psi[1]}\n`;
-    psi_reading += `East: ${psi[2]}\n`;
-    psi_reading += `West: ${psi[3]}\n`;
-    psi_reading += `Central: ${psi[4]}\n`;
-    psi_reading += `Overall: ${psi[5]}\n`;
+    message += `North: ${psi[0]}\n`;
+    message += `South: ${psi[1]}\n`;
+    message += `East: ${psi[2]}\n`;
+    message += `West: ${psi[3]}\n`;
+    message += `Central: ${psi[4]}\n`;
+    message += `Overall: ${psi[5]}\n`;
 
 
-    return psi_reading
+    return message, psi
 
 };
 
