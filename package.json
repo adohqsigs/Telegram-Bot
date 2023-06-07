@@ -1,7 +1,7 @@
 {
   "name": "telebot",
   "version": "1.0.0",
-  "description": "",
+  "deskripsi": "tagihan",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
